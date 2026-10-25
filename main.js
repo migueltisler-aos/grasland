@@ -307,6 +307,73 @@ function nearPath(x, z) {
   scene.add(grass);
 }
 
+/* ------------------------------ Wiesenblumen ------------------------------ */
+// Mohn, Kamille und Kornblumen wie auf Marias Feldfotos – als Billboards, die mit dem Gras wiegen.
+const flowerUniforms = { ...shared, uScale: { value: 800 } };
+{
+  const count = small ? 2200 : 6500, r = rng(23);
+  const pos = new Float32Array(count * 3), par = new Float32Array(count * 4);
+  let n = 0, guard = 0;
+  while (n < count && guard++ < count * 40) {
+    const x = -45 + r() * 105, z = -180 + r() * 205;
+    const patch = noise(x * 0.9 + 13, z * 0.8 - 7);
+    if (patch < 0.15 || r() > 0.2 + 0.8 * Math.exp(-(nearPath(x, z) ** 2) / (2 * 16 * 16))) continue;
+    const hx = x - HOUSE.x, hz = z - HOUSE.z;
+    if (hx * hx + hz * hz < 110) continue;
+    const roll = r();
+    const type = roll < 0.68 ? 0 : roll < 0.9 ? 1 : 2; // Mohn, Kamille, Kornblume
+    pos.set([x, height(x, z), z], n * 3);
+    par.set([0.32 + r() * 0.45, type, r() * 6.28, (type === 0 ? 0.06 : 0.04) * (0.8 + r() * 0.5)], n * 4);
+    n++;
+  }
+  const geo = new THREE.BufferGeometry();
+  geo.setAttribute('position', new THREE.BufferAttribute(pos.subarray(0, n * 3), 3));
+  geo.setAttribute('aParams', new THREE.BufferAttribute(par.subarray(0, n * 4), 4));
+  const flowers = new THREE.Points(geo, new THREE.ShaderMaterial({
+    uniforms: flowerUniforms,
+    vertexShader: /* glsl */`
+      uniform float uTime, uScale;
+      attribute vec4 aParams; // Stängelhöhe, Art, Phase, Blütenradius
+      varying float vType; varying vec3 vWorld; varying float vRot;
+      void main() {
+        float h = aParams.x;
+        float w = sin(uTime * 1.1 + position.x * 0.18 + position.z * 0.12) * 0.55 + sin(uTime * 2.3 + aParams.z) * 0.18;
+        vec3 p = position + vec3(w * 0.32 * h, h, (w * 0.5 + 0.3) * 0.25 * h);
+        vType = aParams.y; vWorld = p; vRot = aParams.z;
+        vec4 mv = viewMatrix * vec4(p, 1.0);
+        gl_Position = projectionMatrix * mv;
+        // Blüten direkt vor der Linse ausblenden, sonst werden sie zu roten Flecken
+        gl_PointSize = -mv.z < 4.0 ? 0.0 : min(aParams.w * 2.0 * uScale / -mv.z, 26.0);
+      }`,
+    fragmentShader: /* glsl */`
+      uniform vec3 uSunColor, uHemiSky; uniform float uSunInt, uHemiInt;
+      varying float vType; varying vec3 vWorld; varying float vRot;
+      ${FOG_GLSL}
+      void main() {
+        vec2 q = gl_PointCoord - 0.5;
+        float a = atan(q.y, q.x) + vRot;
+        float d = length(q) * 2.0;
+        vec3 col;
+        if (vType < 0.5) {            // Mohn: vier weiche Blätter, dunkle Mitte
+          if (d > 0.86 + 0.14 * cos(a * 4.0)) discard;
+          col = mix(vec3(0.05, 0.02, 0.02), vec3(0.75, 0.06, 0.02), smoothstep(0.18, 0.34, d));
+        } else if (vType < 1.5) {     // Kamille: viele schmale Blätter, gelbes Herz
+          if (d > 0.62 + 0.38 * pow(abs(cos(a * 7.0)), 0.6)) discard;
+          col = d < 0.36 ? vec3(0.85, 0.6, 0.05) : vec3(0.9, 0.88, 0.8);
+        } else {                      // Kornblume: gefranst, blau
+          if (d > 0.7 + 0.3 * step(0.0, cos(a * 9.0))) discard;
+          col = mix(vec3(0.08, 0.1, 0.45), vec3(0.2, 0.35, 0.85), smoothstep(0.1, 0.6, d));
+        }
+        vec3 light = uHemiSky * uHemiInt * 0.7 + uSunColor * uSunInt * 0.22;
+        gl_FragColor = vec4(applyFog(col * light, vWorld), 1.0);
+        #include <tonemapping_fragment>
+        #include <colorspace_fragment>
+      }`,
+  }));
+  flowers.frustumCulled = false;
+  scene.add(flowers);
+}
+
 /* ------------------------------ Bodennebel ------------------------------ */
 const mistUniforms = { uTime: shared.uTime, uMist: { value: 0.5 }, uColor: { value: new THREE.Color() } };
 const mistMat = new THREE.ShaderMaterial({
@@ -696,12 +763,12 @@ const frames = [];
 {
   const frameMat = new THREE.MeshStandardMaterial({ color: '#5e4730', roughness: 0.8 });
   const list = [
-    ['grasland-sonnenaufgang', 'Nebel über dem Grasland bei Sonnenaufgang', 5.4, 3.5, -0.55, 2.3],
+    ['nebel-morgen', 'Nebel über dem Löwenberger Land bei Sonnenaufgang', 5.4, 3.5, -0.55, 2.4],
     ['maria-pferde', 'Maria Schmitz mit zwei Pferden', -14, -4, 0.85, 1.15],
     ['maedchen-pferd', 'Grasendes Pferd im Abendlicht mit Zitat einer Mutter', 10.5, -9, -0.7, 1.45],
-    ['waehle-das-pferd', 'Wähle das Pferd, von dem du am meisten lernen kannst', 15, -38, -0.5, 1.0],
-    ['zusammen-weiter-denken', 'Zusammen weiter denken', 12.5, -24, -0.6, 1.4],
-    ['maria-portrait', 'Maria Schmitz im Morgenlicht', -9, -28, 0.5, 2.2],
+    ['mohnfeld-sonne', 'Mohnfeld im Gegenlicht', 15, -38, -0.5, 2.3],
+    ['nebel-baeume', 'Baumgruppen im Morgennebel', 12.5, -24, -0.6, 2.3],
+    ['mohn-kamille', 'Mohn und Kamille am Feldrand', -9, -28, 0.5, 2.1],
   ];
   for (const [img, alt, x, z, rot, w] of list) {
     const g = new THREE.Group();
@@ -769,6 +836,7 @@ function placeCamera(progress) {
   camera.translateY(parallax.y * 0.18 * k);
   camera.fov = fov;
   camera.updateProjectionMatrix();
+  flowerUniforms.uScale.value = renderer.domElement.height / (2 * Math.tan(THREE.MathUtils.degToRad(fov) / 2));
   return { i, local };
 }
 

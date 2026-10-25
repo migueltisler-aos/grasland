@@ -33,7 +33,7 @@ body {
   z-index: -1;
   background:
     linear-gradient(180deg, rgba(246,224,190,0) 40%, #2a2016 100%),
-    url("assets/img/grasland-sonnenaufgang.jpg") center / cover;
+    url("assets/img/nebel-morgen.jpg") center / cover;
 }
 .no-webgl #world { display: none; }
 .no-webgl .poster { z-index: 0; }
@@ -263,6 +263,7 @@ blockquote {
   transition: transform .35s;
 }
 .thumbs button:hover { transform: translateY(-3px); }
+.thumbs.centered { justify-content: center; }
 .thumbs img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
 .portrait {
