@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Maria Schmitz · GRASLAND & Herzenshof</title>
+  <meta name="description" content="Maria Schmitz – Gründerin von GRASLAND und Mitgründerin der Genossenschaft Herzenshof im Löwenberger Land. Bildung, Gesundheit und Natur in Begegnung mit Pferden und Gemeinschaft.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+    }
+  }
+  </script>
+  <script src="conductor.js"></script>
+  <script type="module" src="main.js"></script>
+</head>
+<body>
+  <canvas id="world" aria-hidden="true"></canvas>
+  <div class="poster" aria-hidden="true"></div>
+  <div class="loader" aria-hidden="true"><span>Grasland erwacht</span><i></i></div>
+
+  <header class="top">
+    <a class="brand" href="#ankommen">Maria <em>Schmitz</em></a>
+    <nav aria-label="Kapitel">
+      <ol class="chapters">
+        <li><a href="#ankommen" data-i="0"><span>Ankommen</span></a></li>
+        <li><a href="#grasland" data-i="1"><span>Grasland</span></a></li>
+        <li><a href="#wurzeln" data-i="2"><span>Wurzeln</span></a></li>
+        <li><a href="#herzenshof" data-i="3"><span>Herzenshof</span></a></li>
+        <li><a href="#stimme" data-i="4"><span>Stimme</span></a></li>
+        <li><a href="#zukunft" data-i="5"><span>Zukunft</span></a></li>
+      </ol>
+    </nav>
+  </header>
+
+  <main>
+    <section id="ankommen" class="chapter hero" data-tone="light" style="--h:150vh">
+      <div class="copy">
+        <p class="eyebrow">Löwenberger Land · Brandenburg</p>
+        <h1>Zurück ins Hier<br><em>und Jetzt.</em></h1>
+        <p class="lead">Bildung, Gesundheit und Natur – in Begegnung mit Pferden, mit Gemeinschaft und mit dem Boden, auf dem wir stehen.</p>
+        <p class="scroll-hint" aria-hidden="true">Scrollen, um anzukommen</p>
+      </div>
+    </section>
+
+    <section id="grasland" class="chapter" data-tone="light" style="--h:190vh">
+      <div class="copy card left">
+        <p class="eyebrow">01 · GRASLAND</p>
+        <h2>Reiten beginnt nicht erst <em>im Sattel.</em></h2>
+        <p>Es beginnt in dem Moment, in dem wir unserem Pferd begegnen. GRASLAND ist ein Raum für pferdegestützte Begleitung, Retreats und Entwicklungsprozesse – für junge Menschen und für alle, deren Alltag viel verlangt.</p>
+        <p>Im Mittelpunkt stehen Vertrauen, Körperbewusstsein, feine Kommunikation und die Begegnung zwischen Mensch und Pferd.</p>
+        <ul class="tags"><li>Pferdegestützte Bildung</li><li>Retreats für Frauen</li><li>Prävention &amp; Regeneration</li></ul>
+        <ul class="thumbs" aria-label="Bilder aus GRASLAND">
+          <li><button data-img="grasland-sonnenaufgang" data-alt="Nebel über dem Grasland bei Sonnenaufgang"><img src="assets/img/grasland-sonnenaufgang.jpg" alt="Nebel über dem Grasland bei Sonnenaufgang"></button></li>
+          <li><button data-img="maedchen-pferd" data-alt="Grasendes Pferd im Abendlicht mit Zitat einer Mutter"><img src="assets/img/maedchen-pferd.jpg" alt="Grasendes Pferd im Abendlicht"></button></li>
+          <li><button data-img="maria-pferde" data-alt="Maria Schmitz mit zwei Pferden"><img src="assets/img/maria-pferde.jpg" alt="Maria Schmitz mit zwei Pferden"></button></li>
+          <li><button data-img="waehle-das-pferd" data-alt="Wähle das Pferd, von dem du am meisten lernen kannst"><img src="assets/img/waehle-das-pferd.jpg" alt="Wähle das Pferd, von dem du am meisten lernen kannst"></button></li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="wurzeln" class="chapter" data-tone="dark" style="--h:190vh">
+      <div class="copy card right">
+        <p class="eyebrow">02 · Kreislauf</p>
+        <h2>Vom Mist zur Erde.<br><em>Von der Erde zur Zukunft.</em></h2>
+        <p>Aus Pferdemist wird durch Wurmkompostierung lebendiger Boden – der Anfang einer regionalen Kreislaufwirtschaft. Und ein Bild für alles, was hier wächst: Das Wichtigste trägt oft, ohne gesehen zu werden.</p>
+        <blockquote>Die Zukunft hat keine Einzelzimmer.</blockquote>
+        <ul class="thumbs" aria-label="Bilder zum Kreislauf">
+          <li><button data-img="wurzeln" data-alt="Leuchtendes Wurzelnetz: Die Zukunft hat keine Einzelzimmer"><img src="assets/img/wurzeln.jpg" alt="Leuchtendes Wurzelnetz unter einem Baum"></button></li>
+          <li><button data-img="das-wichtigste" data-alt="Wald im Gegenlicht: Das Wichtigste trägt oft, ohne gesehen zu werden"><img src="assets/img/das-wichtigste.jpg" alt="Wald im Gegenlicht mit Wurzelnetz"></button></li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="herzenshof" class="chapter" data-tone="dark" style="--h:190vh">
+      <div class="copy card left">
+        <p class="eyebrow">03 · Genossenschaft Herzenshof</p>
+        <h2>Mehrgeneration ist ihr <em>Reallabor.</em></h2>
+        <p>Seit über sieben Jahren wächst der Herzenshof: eine Mehrgenerationen-Genossenschaft, enkeltauglich gedacht – von der ersten Idee über die Hofsuche bis zur gelebten Gemeinschaft.</p>
+        <p>Die Fragen dahinter: Wie bleibt gemeinschaftliches Leben langfristig tragfähig? Wie bleiben kleine Genossenschaften sozial und wirtschaftlich resilient – und was lässt sich auf andere ländliche Orte übertragen?</p>
+        <ul class="thumbs" aria-label="Ernte vom Hof">
+          <li><button data-img="aepfel" data-alt="Eine Kiste frisch geernteter Äpfel"><img src="assets/img/aepfel.jpg" alt="Kiste mit Äpfeln"></button></li>
+          <li><button data-img="tomaten" data-alt="Bunte Tomaten aus dem Garten"><img src="assets/img/tomaten.jpg" alt="Bunte Tomaten"></button></li>
+          <li><button data-img="birnen" data-alt="Eine Kiste grüner Birnen"><img src="assets/img/birnen.jpg" alt="Kiste mit Birnen"></button></li>
+          <li><button data-img="gemuese" data-alt="Hier wächst mehr als Gemüse"><img src="assets/img/gemuese.jpg" alt="Kürbis und Zucchini auf dem Küchentisch"></button></li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="stimme" class="chapter" data-tone="dark" style="--h:190vh">
+      <div class="copy card right">
+        <p class="eyebrow">04 · Stimme</p>
+        <h2>Kooperation braucht <em>Demokratie.</em></h2>
+        <p>Als Korrespondentin für <strong>The Labour Pulse</strong> schreibt Maria über die Zukunft von Arbeit, Bildung und Kooperation. Jeden Montag teilt sie ihre <em>MontagsEmpfehlung</em>.</p>
+        <p>Ihr Weg dorthin: Meisterschülerin der freien Kunst mit Fokus auf Performance und Embodiment, Lehrerin an einer Naturschule, Sonderpädagogin in existenzieller Pädagogik – und heute ProzessHebamme für Menschen in Übergängen.</p>
+        <ul class="thumbs" aria-label="Essays und Beiträge">
+          <li><button data-img="kooperative-zukunft" data-alt="Essay: Die kooperative Zukunft der Arbeit"><img src="assets/img/kooperative-zukunft.jpg" alt="Titel: Die kooperative Zukunft der Arbeit"></button></li>
+          <li><button data-img="potenzial" data-alt="Essay: Potenzial statt Anpassung"><img src="assets/img/potenzial.jpg" alt="Titel: Potenzial statt Anpassung"></button></li>
+          <li><button data-img="toechter" data-alt="Serie: Die Töchter der Töchter"><img src="assets/img/toechter.jpg" alt="Die Töchter der Töchter"></button></li>
+          <li><button data-img="montagsempfehlung" data-alt="MontagsEmpfehlung"><img src="assets/img/montagsempfehlung.jpg" alt="MontagsEmpfehlung"></button></li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="zukunft" class="chapter finale" data-tone="light" style="--h:100vh">
+      <div class="copy card center">
+        <img class="portrait" src="assets/img/profil.jpg" alt="Maria Schmitz" width="120" height="120">
+        <p class="eyebrow">05 · Gemeinsam weiter</p>
+        <h2>Wer sich stärkt, <em>stärkt andere.</em></h2>
+        <p>Für die nächste Etappe sucht Maria Forschungs- und Kooperationspartner, Stiftungen und Förderer sowie investierende Mitglieder für den Herzenshof – um Wirkung messbar zu machen und Brücken zwischen Berlin und dem ländlichen Brandenburg zu bauen.</p>
+        <p class="cta"><a class="button" href="https://www.linkedin.com/in/maria-schmitz-4163ba145/" target="_blank" rel="noopener">Mit Maria vernetzen</a></p>
+      </div>
+      <footer class="foot">
+        <p>Maria Schmitz · GRASLAND · Herzenshof · Löwenberger Land &amp; Berlin</p>
+      </footer>
+    </section>
+  </main>
+
+  <dialog class="lightbox" aria-label="Bild">
+    <form method="dialog"><button class="close" aria-label="Schließen">×</button></form>
+    <img alt="">
+    <p class="caption"></p>
+  </dialog>
+</body>
+</html>
